@@ -73,7 +73,7 @@ public class WellCoverSensorHandler extends SimpleStreamDataHandler {
         returnParameter.setAppCode("xyj_2");
 
         QueryData.INSTANCE.postExceptionData(returnParameter);
-//
+//e
 //        returnInfo.put("device_code", DataTypeConstants.WellCoverSensor);
 //        returnInfo.put("device_id", in.getDeviceId());
 //        returnInfo.put("exception_date_time", String.valueOf(in.getUpTimestamp()));
