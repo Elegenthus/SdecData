@@ -1,15 +1,15 @@
 package cn.fudan.lib.app.xyj;
 
-
-import com.alibaba.fastjson.JSONObject;
-
 import java.util.Date;
 
 public class ExceptionParameter {
+
+    private Long id;
     private String deviceCode;
-    private long  deviceId;
+    private String tableName;
+    private String  deviceId;
     private Date exceptionDateTime;
-    private JSONObject exceptionData;
+    private String exceptionData;
     private String alarmLevel;
     private String exceptionInfo;
     private int dataStatus;
@@ -17,6 +17,10 @@ public class ExceptionParameter {
     private Date handlingTime;
     private String handlingRemark;
     private String appCode;
+
+    public Long getId() {return id;}
+
+    public void setId(Long id) {this.id = id;}
 
     public String getDeviceCode() {
         return deviceCode;
@@ -26,11 +30,16 @@ public class ExceptionParameter {
         this.deviceCode = deviceCode;
     }
 
-    public long getDeviceId() {
+    public String getTableName() {return tableName;}
+
+    public void setTableName(String tableName) {this.tableName = tableName;}
+
+
+    public String getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(long deviceId) {
+    public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
 
@@ -42,11 +51,11 @@ public class ExceptionParameter {
         this.exceptionDateTime = exceptionDateTime;
     }
 
-    public JSONObject getExceptionData() {
+    public String getExceptionData() {
         return exceptionData;
     }
 
-    public void setExceptionData(JSONObject exceptionData) {
+    public void setExceptionData(String exceptionData) {
         this.exceptionData = exceptionData;
     }
 

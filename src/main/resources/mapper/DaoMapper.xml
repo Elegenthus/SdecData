@@ -227,12 +227,32 @@
         WHERE up_timestamp BETWEEN #{param.beginDate} AND #{param.endDate}
     </select>
     <select id="insertExceptionData" parameterType="cn.fudan.lib.app.xyj.ExceptionParameter">
-        INSERT INTO t_exception_data
-        (`device_code`,`device_id`,`exception_date_time`,`exception_data`,`alarm_level`,`app_code`)
+        INSERT INTO ${data.tableName}
+        (`id`,`device_code`,`device_id`,`exception_date_time`,`exception_data`,`exception_info`,`alarm_level`,`app_code`)
         VALUES
-        (#{data.deviceCode},#{data.deviceId},
-        #{data.exceptionDateTime},#{data.exceptionData},
-        #{data.alarmLevel},#{data.appCode})
+        (#{data.id},#{data.deviceCode},#{data.deviceId},#{data.exceptionDateTime}
+        ,#{data.exceptionData},#{data.exceptionInfo},#{data.alarmLevel},#{data.appCode})
     </select>
-
+    <select id="getDeviceAddress" resultType="cn.fudan.lib.dto.DeviceInfo"
+            parameterType="cn.fudan.lib.dto.DeviceInfoQueryParameter">
+        SELECT
+        `id`,
+        `device_code` AS deviceCode,
+        `device_no` AS deviceNo,
+        `deveui`,
+        `location_address` AS locationAddress,
+        `lat`,
+        `lng`,
+        `device_height` AS deviceHeight,
+        `device_name` AS deviceName,
+        `province`,
+        `city`,
+        `area`,
+        `detail_address` AS detailAddress,
+        `area_20_km_other` AS area20KmOther,
+        `area_20_km` AS area20Km
+        FROM t_device_info
+        WHERE device_code = #{param.deviceCode}
+        AND ( device_no = #{param.deviceNo} OR deveui = #{param.deveui} )
+    </select>
 </mapper>

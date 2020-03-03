@@ -3,6 +3,9 @@ package cn.fudan.lib.stream.database;
 import cn.fudan.lib.app.xyj.ExceptionParameter;
 import cn.fudan.lib.dao.MySqlSessionFactory;
 import cn.fudan.lib.dto.DataItem;
+import cn.fudan.lib.dto.DeviceInfo;
+import cn.fudan.lib.dto.DeviceInfoQueryParameter;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.session.SqlSession;
 import cn.fudan.lib.app.xr.DeviceInfoDataItem;
 
@@ -49,13 +52,22 @@ public enum QueryData {
     public void postExceptionData(ExceptionParameter parameter){
         SqlSession sqlSession = MySqlSessionFactory.createSqlSession().openSession();
         DaoMapper mapper = sqlSession.getMapper(DaoMapper.class);
-        List<String> dataItemList = null;
 
         try {
             mapper.insertExceptionData(parameter);
-          } finally {
+            sqlSession.commit();
+        } catch (Exception e) {
+            System.out.println("Caught Exception");
+            System.out.println("getMessage():" + e.getMessage());
+            System.out.println("getLocalizedMessage():" +
+                    e.getLocalizedMessage());
+            System.out.println("toString()" + e);
+            System.out.println("printStackTrace():");
+            e.printStackTrace(System.out);
+        } finally {
             if (sqlSession != null)
                 sqlSession.close();
+            System.out.println("successful  " + JSONObject.toJSONString(parameter));
         }
     }
   
@@ -73,6 +85,30 @@ public enum QueryData {
         }
         return deviceInfoDataItem;
     }
+
+    public DeviceInfo queryDeviceAddress (DeviceInfoQueryParameter parameter) {
+//        checkParameter(parameter);
+        SqlSession sqlSession = MySqlSessionFactory.createSqlSession().openSession();
+        DaoMapper mapper = sqlSession.getMapper(DaoMapper.class);
+        DeviceInfo deviceInfoDataItem = null;
+
+        try {
+            deviceInfoDataItem = mapper.getDeviceAddress(parameter);
+        }catch (Exception e) {
+            System.out.println("Caught Exception");
+            System.out.println("getMessage():" + e.getMessage());
+            System.out.println("getLocalizedMessage():" +
+                    e.getLocalizedMessage());
+            System.out.println("toString()" + e);
+            System.out.println("printStackTrace():");
+            e.printStackTrace(System.out);
+        }  finally {
+            if (sqlSession != null)
+                sqlSession.close();
+        }
+        return deviceInfoDataItem;
+    }
+
 
     /**
      * 为了保证数据库的安全，查询数据的时候，必须设置时间范围(开始时间和结束时间)

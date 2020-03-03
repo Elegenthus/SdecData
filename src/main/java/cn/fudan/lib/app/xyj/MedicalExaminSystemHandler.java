@@ -22,7 +22,6 @@ public class MedicalExaminSystemHandler extends SimpleStreamDataHandler{
         jsonArray = JSONObject.parseArray(data, DataContent.class);
         Map<String, List<String>> map = new HashMap<>();
         JSONObject wrongData = new JSONObject();
-        JSONObject returnInfo = new JSONObject();
         String wrongInfo;
         int wrongNum = 0;
 
@@ -57,24 +56,19 @@ public class MedicalExaminSystemHandler extends SimpleStreamDataHandler{
         } else {
             wrongInfo = "严重";
         }
-//        String wrongDataJson = JSON.toJSONString(wrongData);
 
         ExceptionParameter returnParameter = new ExceptionParameter();
+
+        returnParameter.setId(in.getId());
+        returnParameter.setTableName(DataTypeConstants.tExceptionData);
         returnParameter.setDeviceCode(DataTypeConstants.MedicalExaminSystem);
-        returnParameter.setDeviceId(in.getId());
+        returnParameter.setDeviceId(in.getDeviceId());
         returnParameter.setExceptionDateTime(in.getUpTimestamp());
-        returnParameter.setExceptionData(wrongData);
+        returnParameter.setExceptionInfo(wrongData.toString());
         returnParameter.setAlarmLevel(wrongInfo);
         returnParameter.setAppCode("xyj_1");
 
         QueryData.INSTANCE.postExceptionData(returnParameter);
 
-//        returnInfo.put("device_code", DataTypeConstants.MedicalExaminSystem);
-//        returnInfo.put("device_id", in.getDeviceId());
-//        returnInfo.put("exception_date_time", String.valueOf(in.getUpTimestamp()));
-//        returnInfo.put("exception_data", wrongData);
-//        returnInfo.put("alarm_level", wrongInfo);
-//        returnInfo.put("app_code", "xyj_1");
-//        System.out.println(returnInfo);
     }
 }

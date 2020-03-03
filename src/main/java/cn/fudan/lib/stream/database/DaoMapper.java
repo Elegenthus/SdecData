@@ -13,7 +13,7 @@ import java.util.List;
 public interface DaoMapper {
     List<DataItem> readData (@Param ("param") QueryParameter parameter);
     List<String> queryAllDeviceId (@Param ("param") QueryParameter parameter);
-    void insertExceptionData(@Param ("param") ExceptionParameter parameter);
+    void insertExceptionData(@Param ("data") ExceptionParameter exceptionParameter);
   
     List<DeviceInfoDataItem> readDeviceInfo (@Param ("param") QueryParameter parameter);
     void insertException (@Param ("param") InsertParameter parameter);
@@ -25,6 +25,8 @@ public interface DaoMapper {
     DeviceInfo getDeviceInfoByDeviceUi (@Param ("deviceUi") String deviceUi);
 
     List<DeviceInfo> getDeviceInfo (@Param ("param") DeviceInfoQueryParameter parameter);
+
+    DeviceInfo getDeviceAddress (@Param ("param") DeviceInfoQueryParameter parameter);
 
     void updateLocationInfoById (@Param ("item") DeviceInfo item);
 
